@@ -19,7 +19,6 @@ class Targets
   end
 
   def search_target
-    target_name = @project.device['name']
     @logger.info("Searching for target #{target_name}")
     list_targets.each do |target|
       return target if target['name'].include?(target_name)
@@ -29,6 +28,12 @@ class Targets
   rescue StandardError
     @client.reconfigure_machine
     retry
+  end
+
+  def target_name
+    return @machine['name'] if @project.device['device']['type'] == 'system'
+
+    @project.device['name']
   end
 
   def list_targets

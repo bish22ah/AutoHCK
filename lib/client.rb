@@ -93,9 +93,11 @@ class Client
     method = @project.device['install_method']
     name = @machine['name']
     path = @project.driver_path
-    inf = @project.device['inf']
-    @logger.info("Installing #{method} driver #{inf} in #{name}")
-    @tools.install_machine_driver_package(name, path, method, inf)
+    infs = [@project.device['inf']].flatten
+    infs.each do |inf|
+      @logger.info("Installing #{method} driver #{inf} in #{name}")
+      @tools.install_machine_driver_package(name, path, method, inf)
+    end
   end
 
   def default_pool_machines

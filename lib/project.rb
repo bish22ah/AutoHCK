@@ -79,10 +79,7 @@ class Project
       @logger.fatal('toolsHCK script path is not valid')
       exit(1)
     end
-    unless File.exist?("#{@driver_path}/#{@device['inf']}")
-      @logger.fatal('Driver path is not valid')
-      exit(1)
-    end
+    validate_infs
     return if File.exist?("#{@config['virthck_path']}/hck.sh")
 
     @logger.fatal('VirtHCK path is not valid')
@@ -103,6 +100,16 @@ class Project
     @platform['clients'].each_value do |client|
       unless File.exist?("#{@config['images_path']}/#{client['image']}")
         @logger.fatal("#{client['name']} image not found")
+        exit(1)
+      end
+    end
+  end
+
+  def validate_infs
+    infs = [@device['inf']].flatten
+    infs.each do |inf|
+      unless File.exist?("#{@driver_path}/#{inf}")
+        @logger.fatal("Driver inf #{inf} path is not valid")
         exit(1)
       end
     end

@@ -77,5 +77,14 @@
     "inf": "vioser.inf",
     "install_method": "PNP",
     "support": false
+  },
+  {
+    "name": "Sysytem SVVP",
+    "short": "System",
+    "device": { "type": "system", "name": "virtio-net-pci,virtio-scsi-pci", "extra": "" },
+    "inf": [ "netkvm.inf", "vioscsi.inf" ],
+    "install_method": "PNP",
+    "support": false,
+    "blacklist": [ "Debug Capability Test (Logo)" ]
   }
 ]
